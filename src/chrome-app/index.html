@@ -7,18 +7,6 @@
         <link href="images/readium_favicon.png" rel="shortcut icon"/>
         <!-- link href="images/readium-touch-icon.png" rel="apple-touch-icon"/ -->
 
-    <style>
-        .library-item{
-            height: 100px;
-
-        }
-
-        body:not(.list-view) .library-item .no-cover{
-            width: 300px;
-            height: 400px;
-            font-size: 40px;
-        }
-    </style>
 
     <link rel="stylesheet" type="text/css" href="css/readium-all.css">
 
@@ -30,10 +18,26 @@
 
     <!-- This is all application-specific HTML -->
     <body>
+        <div id="splashScreen" style="
+        background-image: url('/images/bgRepeat.png') ;
+            
+            ">
+            <div id="splashScreenFade" >
+                <div id="logos">
+                    <div class="logo ekitabuLogo">      <img src="/images/ekitabuLogoLg.png">      </div>
+                    <div class="logo kenyaShield">      <img src="/images/kenyaShield.png">        </div>
+                    <div class="logo kenyaPublishers">  <img src="/images/kenyaPublishersLogo.png"></div>
+                    <div class="logo positivo">         <img src="/images/positivoLogo.png">       </div>
+                </div>
+                <a id="closeSplash" style="position: relative; top: 55%" href="#">Get Started</a>
+            </div>
+            
+        </div>
         <nav id="app-navbar" class="navbar" role="banner" aria-label="{{Strings.i18n_toolbar}}">
         </nav>
         <div id="app-container">
         </div>
     </body>
+    <script type="text/javascript" src="scripts/eKitabu.js" ></script>
 
 </html>
