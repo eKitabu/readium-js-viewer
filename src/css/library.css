@@ -104,7 +104,6 @@
 }
 
 .title, .author{
-    /*text-align: center;*/
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -167,13 +166,6 @@ body.list-view #app-container .library-item .book-info .author{
     text-align: left;
 }
 
-/*
-body.list-view #app-container .library-item img{
-    height: 190px;
-    width: 142px;
-    max-width: 142px;
-}
-*/
 
 .has-cover{
     background-repeat:no-repeat;
@@ -205,22 +197,6 @@ body.list-view .details{
     }
 }
 
-
-/*.icon-library, .icon-library:active{
-  background-image: url('../images/glyphicons_319_sort.png');
-}
-
-.icon-add-epub, .icon-add-epub:active{
-  background-image: url('../images/glyphicons_432_plus.png');
-}
-
-.icon-thumbnails, .icon-thumbnails:active{
-  background-image: url('../images/glyphicons_156_show_thumbnails.png');
-}
-
-.icon-list-view, .icon-list-view:active{
-  background-image: url('../images/glyphicons_158_show_lines.png');
-}*/
 
 .icon-thumbnails{
     display:none;
@@ -262,4 +238,11 @@ body.list-view .details{
     display: inline-block;
     vertical-align: middle;
     line-height: normal;
+}
+
+
+body:not(.list-view) .library-item .no-cover{
+    width: 300px;
+    height: 400px;
+    font-size: 40px;
 }

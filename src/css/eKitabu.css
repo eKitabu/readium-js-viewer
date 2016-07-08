@@ -1,0 +1,54 @@
+#logos .logo { margin: 0% }
+#logos .logo.kenyaPublishers { margin-left: 0%; margin-right: 4% }
+#logos .logo.positivo { margin-right: 0% }
+#logos .logo.kenyaShield img { width: 53%; }
+.library-item{
+    height: 100px;
+
+}
+
+#logos { text-align: center; position: relative; top: 40%;}
+
+div.logo { display: inline-block; width: 22%; margin: 0 3%}
+
+div.logo img { height: auto; width: 100%; }
+
+#splashScreen
+{
+    position:fixed;
+    width: 100%;
+    height: 100%;
+    overflow:auto;
+    z-index: 900;
+    background-color: white;
+    text-align: center;
+}
+
+
+#closeSplash
+{
+    box-shadow: 0 0 4px rgba(0,0,0,.14),0 4px 8px rgba(0,0,0,.28);
+    display: block; width: 200px; padding: 10px; background-color: red; color: white; text-align: center;
+    font-size: 16px;
+    font-weight: 800;
+    margin: 0px auto;
+    text-decoration: none;
+    font-family: Open Sans;
+    text-transform: uppercase;
+}
+
+#splashScreenFade
+{
+ width: 100%; 
+ height: 100%;
+ background: -webkit-linear-gradient(left,
+                rgba(255,255,255,1.0) 0%, 
+                rgba(255,255,255,0) 10%, 
+                rgba(255,255,255,0) 90% ,
+                rgba(255,255,255,1.0) 100% ),
+             -webkit-linear-gradient(top,
+                rgba(255,255,255,1.0) 0%, 
+                rgba(255,255,255,0) 10%, 
+                rgba(255,255,255,0) 90% ,
+                rgba(255,255,255,1.0) 100%);
+}
