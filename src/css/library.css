@@ -245,4 +245,14 @@ body:not(.list-view) .library-item .no-cover{
     width: 300px;
     height: 400px;
     font-size: 40px;
+
+.removeCategory
+{
+    font-size: 2em;
+    opacity: 0.5;
+}
+
+.removeCategory:hover
+{
+    opacity: 1;
 }
