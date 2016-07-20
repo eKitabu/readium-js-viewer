@@ -185,6 +185,63 @@ body.list-view .details{
     display: inline;
 }
 
+/**** ALTERNATE LIST VIEW CODE********/
+
+table#listViewTable 
+{
+    width: 95%;
+    margin: 0px auto;
+    margin-top: 30px;
+    font-size: 16px;
+}
+table#listViewTable th
+{
+    background-color: black;
+    color: white;
+    text-transform: uppercase;
+    padding:21px;
+    font-weight: bolder;
+}
+
+table#listViewTable, table#listViewTable th, table#listViewTable td
+{
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+table#listViewTable td
+{
+    padding: 14px;
+}
+table#listViewTable th, table#listViewTable td,table#listViewTable tr td:first-child button
+{
+    padding-left:35px; 
+}
+table#listViewTable tr td:first-child
+{
+    padding: 0px;
+}
+table#listViewTable tr td:first-child button
+{
+    display:block;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    margin: 0;
+}
+
+
+table#listViewTable tr:nth-child(even) td
+{
+    background: rgba(237,28,36,0.15);
+}
+
+table#listViewTable tr:nth-child(odd) td
+{
+    background: rgba(0,0,0,0.15);
+}
+
 @media (max-width:768px){
 
     .library-item .book-info{
@@ -245,6 +302,7 @@ body:not(.list-view) .library-item .no-cover{
     width: 300px;
     height: 400px;
     font-size: 40px;
+}
 
 .removeCategory
 {
@@ -256,3 +314,10 @@ body:not(.list-view) .library-item .no-cover{
 {
     opacity: 1;
 }
+
+
+
+
+
+
+

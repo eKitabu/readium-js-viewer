@@ -9,8 +9,10 @@ define([
 'i18nStrings',
 'hgn!readium_js_viewer_html_templates/library-navbar.html',
 'hgn!readium_js_viewer_html_templates/library-body.html',
+'hgn!readium_js_viewer_html_templates/library-body-list-view.html',
 'hgn!readium_js_viewer_html_templates/empty-library.html',
 'hgn!readium_js_viewer_html_templates/library-item.html',
+'hgn!readium_js_viewer_html_templates/library-item-list-view.html',
 'hgn!readium_js_viewer_html_templates/dialog.html',
 'hgn!readium_js_viewer_html_templates/about-dialog.html',
 'hgn!readium_js_viewer_html_templates/details-body.html',
@@ -36,8 +38,10 @@ libraryManager,
 Strings,
 LibraryNavbar,
 LibraryBody,
+LibraryBodyListView,
 EmptyLibrary,
 LibraryItem,
+LibraryItemListView,
 Dialog,
 AboutDialog,
 DetailsBody,
@@ -273,9 +277,41 @@ Helpers){
         }
     }
 
-    var loadLibraryItems = function(epubs){
+    var viewTypes = { grid : "grid", list : "list"}
+    var loadLibraryItemsGridView = function(epubs) {
+        loadLibraryItems(epubs,viewTypes.grid);
+    }
+    var loadLibraryItemsListView = function(epubs) {
+        loadLibraryItems(epubs,viewTypes.list);
+    }
+
+    var loadLibraryItems = function(epubs,viewType){
         $('#app-container .library-items').remove();
-        $('#app-container').append(LibraryBody({}));
+
+        //if the view type isn't specified, check if we have the list-view class
+        if (typeof(viewType) === 'undefined') {
+                if ($('body').hasClass("list-view")) {
+                    viewType = viewTypes.list;
+                }
+                else {
+                    viewType = viewTypes.grid;
+                }
+        }//if
+        
+
+        //load library body based on what type of view we are in 
+
+        //Load LIST VIEW library body
+        if (viewType === viewTypes.list) {
+            console.log("append the list view library body");
+            $('#app-container').append(LibraryBodyListView({}));
+        }
+        //Load GRID VIEW library body
+        else if (viewType === viewTypes.grid){
+            console.log("append the GRID view library body");
+            $('#app-container').append(LibraryBody({}));
+        }
+
         if (!epubs.length){
             $('#app-container .library-items').append(EmptyLibrary({imagePathPrefix: moduleConfig.imagePathPrefix, strings: Strings}));
             return;
@@ -303,13 +339,20 @@ Helpers){
             
             var createLibraryItem = function() {
 
-                // See --COMMENT-- below!
-                // if (!epub.isSubLibraryLink && !epub.packagePath) {
-                //     console.warn("no epub.packagePath (OPF within zipped EPUB archive?): " + epub.rootUrl);
-                //     //console.log(epub);
-                // }
+                //Display the library item depending on the view type
                 
-                $('.library-items').append(LibraryItem({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground}));
+                //LIST VIEW
+                if (viewType === viewTypes.list)
+                {
+                    $('.library-items').append(LibraryItemListView({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground}));
+                    console.log("view type was equal to list");
+                }
+                //GRID VIEW 
+                else if (viewType === viewTypes.grid)
+                {
+                    $('.library-items').append(LibraryItem({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground}));
+                }
+
                 
                 processEpub(epubs, ++count);
             };
@@ -582,10 +625,12 @@ Helpers){
         $('nav').append(LibraryNavbar({strings: Strings, dialogs: Dialogs, keyboard: Keyboard}));
         $('.icon-list-view').on('click', function(){
             $(document.body).addClass('list-view');
+            libraryManager.retrieveAvailableEpubs(loadLibraryItemsListView);
             setTimeout(function(){ $('.icon-thumbnails')[0].focus(); }, 50);
         });
         $('.icon-thumbnails').on('click', function(){
             $(document.body).removeClass('list-view');
+            libraryManager.retrieveAvailableEpubs(loadLibraryItemsGridView);
             setTimeout(function(){ $('.icon-list-view')[0].focus(); }, 50);
         });
         findHeightRule();

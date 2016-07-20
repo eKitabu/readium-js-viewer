@@ -1,0 +1,59 @@
+<tr>
+    <td>
+        <button type="button"  class="read"
+        
+        {{#epub.isSubLibraryLink}}
+        
+        data-library="{{epub.rootUrl}}"
+        
+        {{/epub.isSubLibraryLink}}
+
+        {{^epub.isSubLibraryLink}}
+            
+            {{#epub.isExternalLink}}
+            
+            data-link="{{epub.rootUrl}}"
+            
+            {{/epub.isExternalLink}}
+    
+            {{^epub.isExternalLink}}
+            
+            data-book="{{epub.rootUrl}}"
+            
+            {{/epub.isExternalLink}}
+        
+        {{/epub.isSubLibraryLink}}
+        
+        aria-label="({{count.n}}) {{epub.title}}" title="({{count.n}}) "  tabindex="{{count.tabindex}}">
+{{epub.title}}
+    </button>
+</td>
+    <td>{{epub.author}}{{^epub.author}}No Author Listed{{/epub.author}}</td>
+    <td>{{#epub.categories}}{{.}} {{/epub.categories}}</td>
+</tr>
+    </div>
+
+    <!-- <div class="caption buttons">
+        <a href="#" class="btn btn-default read" data-book="{{epub.packageUrl}}" role="button">{{strings.i18n_read}}</a>
+        <a href="#details-modal" data-book="{{epub.packageUrl}}" aria-pressed="true" class="btn btn-default details" data-toggle="modal" role="button">{{strings.i18n_details}}</a>
+    </div> -->
+    <div class='caption book-info'>
+        <div class='author' title="{{epub.author}}"></div>
+
+        {{^epub.isSubLibraryLink}}
+            
+            {{^epub.isExternalLink}}
+                    
+                <div class="buttons">
+        
+                <button data-toggle="modal" data-target="#categories-modal" data-package="{{epub.rootUrl}}/{{epub.packagePath}}" data-root="{{epub.rootUrl}}" data-root-dir="{{epub.rootDir}}" {{^epub.coverHref}} data-no-cover="{{noCoverBackground}}" {{/epub.coverHref}} data-categories="{{#epub.categories}}{{.}},{{/epub.categories}}" class="btn btn-info categories">{{strings.i18n_categories}}</button>
+                <button aria-label="{{strings.i18n_details}} ({{count.n}}) {{epub.title}}" title="{{strings.i18n_details}} ({{count.n}}) {{epub.title}}" tabindex="{{count.tabindex}}" data-toggle="modal" data-target="#details-modal" data-package="{{epub.rootUrl}}/{{epub.packagePath}}" data-root="{{epub.rootUrl}}" data-root-dir="{{epub.rootDir}}" {{^epub.coverHref}} data-no-cover="{{noCoverBackground}}" {{/epub.coverHref}} class="btn btn-info details">{{strings.i18n_details}}</button>
+                
+                </div>
+                
+            {{/epub.isExternalLink}}
+        
+        {{/epub.isSubLibraryLink}}
+    </div>
+</div>
+
