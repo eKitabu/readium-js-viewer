@@ -1,10 +1,5 @@
-<div class="col-xs-4 col-sm-3 col-md-2 library-item {{#epub.categories}}category-{{.}} {{/epub.categories}}">
+<div class="col-xs-4 col-sm-3 col-md-2 library-item {{cssClasses}}">
     <div class='info-wrap'>
-        <!-- <div class='caption book-info'>
-            <h4 class='title'>{{ epub.title }}</h4>
-            <div class='author'>{{ epub.author}}{{^epub.author}}No Author Listed{{/epub.author}}</div>
-        </div> -->
-
         <button type="button" style="background: none; border: none; padding: 0; margin: 0;" class="read"
         
         {{#epub.isSubLibraryLink}}
@@ -47,21 +42,10 @@
     </div> -->
     <div class='caption book-info'>
         <h4 class='title' title="{{epub.title}}">{{epub.title}}</h4>
-        <div class='author' title="{{epub.author}}">{{epub.author}}{{^epub.author}}No Author Listed{{/epub.author}}</div>
-
-        {{^epub.isSubLibraryLink}}
-            
-            {{^epub.isExternalLink}}
-                    
-                <div class="buttons">
-        
-                <button data-toggle="modal" data-target="#categories-modal" data-package="{{epub.rootUrl}}/{{epub.packagePath}}" data-root="{{epub.rootUrl}}" data-root-dir="{{epub.rootDir}}" {{^epub.coverHref}} data-no-cover="{{noCoverBackground}}" {{/epub.coverHref}} data-categories="{{#epub.categories}}{{.}},{{/epub.categories}}" class="btn btn-info categories">{{strings.i18n_categories}}</button>
-                <button aria-label="{{strings.i18n_details}} ({{count.n}}) {{epub.title}}" title="{{strings.i18n_details}} ({{count.n}}) {{epub.title}}" tabindex="{{count.tabindex}}" data-toggle="modal" data-target="#details-modal" data-package="{{epub.rootUrl}}/{{epub.packagePath}}" data-root="{{epub.rootUrl}}" data-root-dir="{{epub.rootDir}}" {{^epub.coverHref}} data-no-cover="{{noCoverBackground}}" {{/epub.coverHref}} class="btn btn-info details">{{strings.i18n_details}}</button>
-                
-                </div>
-                
-            {{/epub.isExternalLink}}
-        
-        {{/epub.isSubLibraryLink}}
+        <div class="categoryListings">
+            {{#epub.categories}}
+            <span class="categoryListing">{{.}}</span>
+            {{/epub.categories}}
+        </div>
     </div>
 </div>

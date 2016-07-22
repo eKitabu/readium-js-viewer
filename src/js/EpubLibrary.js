@@ -18,8 +18,10 @@ define([
 'hgn!readium_js_viewer_html_templates/details-body.html',
 'hgn!readium_js_viewer_html_templates/add-epub-dialog.html',
 'hgn!readium_js_viewer_html_templates/categories-dialog-body.html',
+'hgn!readium_js_viewer_html_templates/filter-categories-dialog-body.html',
 './ReaderSettingsDialog',
 './CategoriesDialog',
+'./FilterCategoriesDialog',
 './Dialogs',
 './workers/Messages',
 'Analytics',
@@ -47,8 +49,10 @@ AboutDialog,
 DetailsBody,
 AddEpubDialog,
 CategoriesDialogBody,
+FilterCategoriesDialogBody,
 SettingsDialog,
 CategoriesDialogController,
+FilterCategoriesDialogController,
 Dialogs,
 Messages,
 Analytics,
@@ -59,9 +63,14 @@ Helpers){
 
     //to add a header section to the Dialog, add header: "true" property
     var pageDialogsHtmlString = { 
-        details    : Dialog({ dialogName: "details"    }),
-        categories : Dialog({ dialogName: "categories" })
+        details             : Dialog({ dialogName: "details"            }),
+        filterCategories    : Dialog({ dialogName: "filterCategories"   }),
+        categories          : Dialog({ dialogName: "categories"         })
                         };
+    var currentCssFilterString = "";
+    var updateCurrentCssFilterString = function(newValue) {
+        currentCssFilterString = newValue;
+    }
 
     var heightRule,
         noCoverRule;
@@ -79,7 +88,7 @@ Helpers){
                 cssRule = styleSheet.rules[ii];
             }
             if (cssRule && cssRule.selectorText)  {
-                if (cssRule.selectorText.toLowerCase()=='.library-item') {
+                if (cssRule.selectorText.toLowerCase()=='div.library-item') {
                     heightRule = cssRule;
                 }
                 // else if (cssRule.selectorText.toLowerCase()=='.library-item img') {
@@ -127,6 +136,15 @@ Helpers){
         noCoverRule.style.fontSize = 40 * scale + 'px';
         //maxHeightRule.style.height = 1.33 * imgWidth + 'px';
         //maxHeightRule.style.width = imgWidth + 'px';
+    };
+
+
+    var loadFilterCategoriesDialog = function() {
+        //load the categories template as a string
+        bodyStr = FilterCategoriesDialogBody({string: Strings });
+        showDialog("filterCategories");
+        $('.filterCategories-dialog .modal-body').html(bodyStr);
+        FilterCategoriesDialogController.initDialog(updateCurrentCssFilterString);
     };
 
     /**
@@ -303,12 +321,10 @@ Helpers){
 
         //Load LIST VIEW library body
         if (viewType === viewTypes.list) {
-            console.log("append the list view library body");
             $('#app-container').append(LibraryBodyListView({}));
         }
         //Load GRID VIEW library body
         else if (viewType === viewTypes.grid){
-            console.log("append the GRID view library body");
             $('#app-container').append(LibraryBody({}));
         }
 
@@ -327,6 +343,22 @@ Helpers){
             if (!epub) { // count >= epubs.length, eg epub[count] = null
                 $('.details').on('click', loadDetails);
                 $('.categories').on('click', loadCategoriesDialog );
+                console.log("current css filter string is");
+                console.log(currentCssFilterString);
+                if (!(currentCssFilterString === ""))
+                {
+                    console.log('so we are hiding items');
+                    $(".library-item").hide();
+                    $(currentCssFilterString).show();
+                }
+                if ($(".library-item").length > 0)
+                {
+                    $('#closeSplash').on('click', loadFilterCategoriesDialog );
+                }
+                $("#clearFilters").click(function() { 
+                    $(".library-item").show();
+                    currentCssFilterString = "";
+                });
                 return;
             }
 
@@ -339,18 +371,29 @@ Helpers){
             
             var createLibraryItem = function() {
 
+                cssClassesString = "";
+                if (epub.hasOwnProperty("categories")) {
+                    cssArray = epub.categories.slice();
+                    epub.categories.forEach(prepareCssClassStrings);
+                    function prepareCssClassStrings(item,index){
+                        var categoryPrepend = "category-";
+                        item = item.replace(/ /g, "_");
+                        item = categoryPrepend.concat(item.replace(/\./g, ""));
+                        cssArray[index] = item;
+                    }
+                    var cssClassesString = cssArray.join(" ");
+                }
                 //Display the library item depending on the view type
                 
                 //LIST VIEW
                 if (viewType === viewTypes.list)
                 {
-                    $('.library-items').append(LibraryItemListView({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground}));
-                    console.log("view type was equal to list");
+                    $('.library-items').append(LibraryItemListView({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground,cssClasses:cssClassesString}));
                 }
                 //GRID VIEW 
                 else if (viewType === viewTypes.grid)
                 {
-                    $('.library-items').append(LibraryItem({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground}));
+                    $('.library-items').append(LibraryItem({count:{n: count+1, tabindex:count*2+99}, epub: epub, strings: Strings, noCoverBackground: noCoverBackground,cssClasses:cssClassesString}));
                 }
 
                 
@@ -384,18 +427,6 @@ Helpers){
             }
         };
         processEpub(epubs, 0);
-
-        //proof of concept of links to hide / show the library items based on 
-        //their categories
-        $("#categoryLinks a").click(function(e) {
-            e.preventDefault();
-            $(".library-item").hide();
-            $("#categoryLinks a").removeClass("active");
-            $(this).addClass("active");
-            categoryName = $(this).attr("href");
-            console.log("hiding .library-item ." + categoryName);
-            $(".library-item." + categoryName).show();
-        });
     }
 
     var readClick = function(e){
@@ -610,6 +641,8 @@ Helpers){
 
             setTimeout(function(){ $('#closeAddEpubCross')[0].focus(); }, 1000);
         });
+
+
         $('#url-upload').on('keyup', function(){
             var val = $(this).val();
             if (val && val.length){
@@ -657,6 +690,8 @@ Helpers){
         $('#dir-upload').on('change', handleDirSelect);
 
         document.title = Strings.i18n_readium_library;
+        $('.filterCategories').on('click', loadFilterCategoriesDialog );
+
 
         $('#settings-dialog').on('hidden.bs.modal', function () {
 

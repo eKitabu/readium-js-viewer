@@ -50,6 +50,7 @@ define(['./ModuleConfig',
                 $(".removeCategory").click(function() {
                     removeCategory($(this));
                 });
+                $("#customCategory").val("");
                 //reload the library to reflect the new changes
                 LibraryManager.retrieveAvailableEpubs(loadLibraryItems);
             }

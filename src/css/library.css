@@ -21,7 +21,7 @@
 .library-items{
     margin: 20px 10px;
 }
-.library-item{
+div.library-item{
     position: relative;
 
     padding-bottom: 20px;
@@ -130,7 +130,7 @@ nav #remotestorage-widget, nav #remotestorage-widget .rs-cube {
 body.list-view #app-container{
     position: relative;
 }
-body.list-view #app-container .library-item{
+body.list-view #app-container div.library-item{
     width: 100%;
     height: 250px;
     position: static;
@@ -187,32 +187,68 @@ body.list-view .details{
 
 /**** ALTERNATE LIST VIEW CODE********/
 
-table#listViewTable 
+table#listViewTable ,table.filterCategoriesTable
 {
     width: 95%;
     margin: 0px auto;
     margin-top: 30px;
     font-size: 16px;
 }
-table#listViewTable th
+table#listViewTable{
+    table-layout:fixed;
+}
+table.filterCategoriesTable
+{
+    width: 31%;
+    display: inline-table;
+    vertical-align: middle;
+    margin: 0 82px;
+}
+table.subjectsTable.inactive
+{
+    opacity: 0.2;
+}
+
+table#listViewTable th,table.filterCategoriesTable th
 {
     background-color: black;
     color: white;
     text-transform: uppercase;
     padding:21px;
-    font-weight: bolder;
+    font-weight: 900;
 }
 
-table#listViewTable, table#listViewTable th, table#listViewTable td
+table#listViewTable th:nth-child(2),
+table#listViewTable td:nth-child(2)
+{
+    width: 91px;
+    text-align: center;
+    padding: 0;
+
+}
+
+
+table#listViewTable,
+table#listViewTable th,
+table#listViewTable td,
+table.filterCategoriesTable,
+table.filterCategoriesTable th,
+table.filterCategoriesTable td
 {
     border: 2px solid rgba(255,255,255,0.3);
 }
 
-table#listViewTable td
+table#listViewTable td,
+table.filterCategoriesTable td
 {
     padding: 14px;
 }
-table#listViewTable th, table#listViewTable td,table#listViewTable tr td:first-child button
+table#listViewTable th,
+table#listViewTable td,
+table#listViewTable tr td:first-child button.read,
+table.filterCategoriesTable,
+table.filterCategoriesTable th,
+table.filterCategoriesTable td
 {
     padding-left:35px; 
 }
@@ -220,7 +256,7 @@ table#listViewTable tr td:first-child
 {
     padding: 0px;
 }
-table#listViewTable tr td:first-child button
+table#listViewTable tr td:first-child button.read
 {
     display:block;
     width: 100%;
@@ -232,15 +268,20 @@ table#listViewTable tr td:first-child button
 }
 
 
-table#listViewTable tr:nth-child(even) td
+
+table#listViewTable tr:nth-child(odd) td,
+table.filterCategoriesTable td
+{
+    background: rgba(0,0,0,0.15);
+}
+
+table#listViewTable tr:nth-child(even) td,
+table.filterCategoriesTable td.selected
 {
     background: rgba(237,28,36,0.15);
 }
 
-table#listViewTable tr:nth-child(odd) td
-{
-    background: rgba(0,0,0,0.15);
-}
+
 
 @media (max-width:768px){
 
@@ -306,8 +347,14 @@ body:not(.list-view) .library-item .no-cover{
 
 .removeCategory
 {
-    font-size: 2em;
     opacity: 0.5;
+    margin-left: 3px;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    position: relative; top: 3px;
 }
 
 .removeCategory:hover

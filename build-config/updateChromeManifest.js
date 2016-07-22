@@ -27,7 +27,7 @@ var finish = function(){
 var stable = version.readiumJsViewer.release || version.readiumJsViewer.branch == 'master';
 
 if (!stable){
-    manifest.name = 'Readium (Development Build)';
+    manifest.name = 'eKitabu Educational Reader';
 
     var mediumStream = fs.createReadStream('src/chrome-app/icons/devBuild/medium.png');
     mediumStream.pipe(fs.createWriteStream('dist/chrome-app/icons/medium.png'));

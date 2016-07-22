@@ -1,6 +1,46 @@
+@font-face{
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: url("OpenSans-Regular.ttf");
+}
+@font-face{
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    src: url("OpenSans-Bold.ttf");
+}
+@font-face{
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 900;
+    src: url("OpenSans-ExtraBold.ttf");
+}
+@font-face{
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 400;
+    src: url("OpenSans-Italic.ttf");
+}
+body { 
+    font-family: Open Sans, sans-serif;
+    font-weight: 400;
+}
+#logos { text-align: center; position: relative; top: 10%;}
 
-#logos { text-align: center; position: relative; top: 40%;}
-
+.btn
+{
+    padding: 3px 12px;
+}
+.btn-info ,.btn-info:active,.btn-info:active:focus,.btn-info:focus
+{
+    background-color: #ec2028;
+    border: 0px;
+}
+.btn-info:hover
+{
+    background-color: #c5191f;
+}
 
 div.logo img { height: auto; width: 100%; }
 
@@ -13,6 +53,7 @@ div.logo img { height: auto; width: 100%; }
     z-index: 900;
     background-color: white;
     text-align: center;
+    background-image: url('/images/bgRepeat.png') ;
 }
 
 
@@ -38,3 +79,111 @@ div.logo img { height: auto; width: 100%; }
 .logoTop img{max-width:400px;width:53%}
 div.logo{display:inline-block;width:20%;margin:0 1%}
 
+
+#app-container
+{
+    background:url('/images/handsBg.png')  left bottom no-repeat,url('/images/childrensBackground.png')  center no-repeat , url('/images/inAppBg.png');
+}
+
+.addCategoryListLabel,
+.addCategoryGroupLabel
+{
+    float: left;
+    width: 80px;
+    padding-top: 10px;
+}
+
+.addCategoryGroup
+{
+    width: 450px;
+    float: left;
+    text-align: left;
+}
+.addCategorySection button.addCategory,
+.addCustomCategorySection button.addCategory
+{
+    padding: 6px 12px;
+    font-size: 15;
+}
+
+.addCustomCategorySection input
+{
+    background: transparent;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 4px 12px;
+    margin: 0 24px;
+}
+.addCategorySection
+{
+    margin: 15px 0 ;
+    float:left;
+}
+.addCategoryGroup button.addCategory,
+ul#bookCurrentCategories li
+{
+    margin: 4px 5px;
+}
+.modal-content
+{
+    float: left;
+}
+
+ul#bookCurrentCategories 
+{
+    list-style: none;
+}
+ul#bookCurrentCategories li
+{
+    border: 2px solid #ec2028;
+    border-radius: 4px;
+    padding: 3px 7px;
+    font-weight: bold;
+    vertical-align: top; display: inline-block;
+
+}
+
+
+
+
+.addCustomCategorySection
+{
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    width: 100%;
+    float:left;
+    padding: 10px 0;
+    margin-top: 14px;
+}
+
+
+.addCategories { float: left;};
+
+.categoryListing
+{
+    font-weight: bolder;
+}
+.categoryListing:after
+{
+    content: ",";
+}
+.categoryListings 
+{
+    display: inline;
+}
+.categoryListings .categoryListing:last-child:after
+{
+    content: "";
+}
+
+
+.filterCategories-dialog .modal-dialog
+{
+    width: 90%;
+}
+
+.filterCategories-dialog .modal-content
+{
+    float: none;
+    text-align: center;
+}
