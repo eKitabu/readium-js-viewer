@@ -301,6 +301,7 @@ html[data-theme=night-theme] #right-page-btn:hover
     top: 0;
     
     overflow: hidden;
+    background-color: white;
 }
 
 /* embedded mode styles */

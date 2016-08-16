@@ -187,3 +187,10 @@ ul#bookCurrentCategories li
     float: none;
     text-align: center;
 }
+
+
+.categoryListings span.categoryListing:first-child
+{
+    margin-left: 5px;
+
+}
