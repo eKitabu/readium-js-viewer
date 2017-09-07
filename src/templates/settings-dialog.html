@@ -18,10 +18,9 @@
 
            <div class="tab-content">
                 <div id="tab-style" class="tab-pane active" role="tabpanel" aria-expanded="true">
-
                 <h5 aria-hidden="true">{{strings.preview}}</h5>
                 <div  aria-hidden="true" class="row">
-                    <div data-theme="default-theme" class="col-xs-10 col-xs-offset-1 preview-text default-theme">
+                    <div data-theme="author-theme" class="col-xs-10 col-xs-offset-1 preview-text author-theme">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus neque dui, congue a suscipit non, feugiat eu urna. Cras in felis sed orci aliquam sagittis.
                     </div>
                 </div>
@@ -39,6 +38,32 @@
                         <div class="col-xs-2">
                             <img src="{{{imagePathPrefix}}}images/glyphicons_116_text_bigger.png" alt="" aria-hidden="true">
                         </div>
+                    </div>
+
+                    <h5 id="setting-header-font-selection" class="setting-header">{{strings.i18n_font_selection}}</h5>
+                    <div class="row">
+                        <div class="col-xs-8 col-xs-offset-2">
+                            <select style="width: 100%; padding: 0.5em;" aria-labelledby="setting-header-font-selection" id="font-selection-input"  title="{{strings.i18n_font_selection}}" aria-label="{{strings.i18n_font_selection}}">
+                                <option value="0" aria-label="{{strings.i18n_fonttype_default}}" title="{{strings.i18n_fonttype_default}}">{{strings.i18n_fonttype_default}}</option>
+							</select>
+                        </div>
+                    </div>
+
+
+                    <h5 id="setting-header-color-legend" class="setting-header">{{strings.i18n_text_and_background_color}}</h5>
+                    <div role="group" aria-labelledby="setting-header-color-legend" id="theme-radio-group" class="row">
+
+                        <button role="button" data-theme="author-theme"  title="{{strings.i18n_author_theme}}" aria-label="{{strings.i18n_author_theme}}" class="col-xs-8 col-xs-offset-2 theme-option author-theme clickable">{{strings.i18n_author_theme}}</button>
+
+                        <button role="button" data-theme="default-theme"  title="{{strings.i18n_black_and_white}}" aria-label="{{strings.i18n_black_and_white}}" class="col-xs-8 col-xs-offset-2 theme-option default-theme clickable">{{strings.i18n_black_and_white}}</button>
+
+                        <button role="button" data-theme="night-theme"  title="{{strings.i18n_arabian_nights}} [{{keyboard.NightTheme}}]" aria-label="{{strings.i18n_arabian_nights}} [{{keyboard.NightTheme}}]" class="col-xs-8 col-xs-offset-2 theme-option night-theme clickable" >{{strings.i18n_arabian_nights}}</button> <!-- accesskey="{{keyboard.accesskeys.NightTheme}}" -->
+
+                        <button role="button" data-theme="parchment-theme"  title="{{strings.i18n_sands_of_dune}}" aria-label="{{strings.i18n_sands_of_dune}}" class="col-xs-8 col-xs-offset-2 theme-option parchment-theme clickable">{{strings.i18n_sands_of_dune}}</button>
+
+                        <button role="button" data-theme="ballard-theme"  title="{{strings.i18n_ballard_blues}}" aria-label="{{strings.i18n_ballard_blues}}" class="col-xs-8 col-xs-offset-2 theme-option ballard-theme clickable">{{strings.i18n_ballard_blues}}</button>
+
+                        <button role="button" data-theme="vancouver-theme"  title="{{strings.i18n_vancouver_mist}}" aria-label="{{strings.i18n_vancouver_mist}}" class="col-xs-8 col-xs-offset-2 theme-option vancouver-theme clickable">{{strings.i18n_vancouver_mist}}</button>
                     </div>
                 </div>
                 <div id="tab-layout" class="tab-pane" role="tabpanel">
