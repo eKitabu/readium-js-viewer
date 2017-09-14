@@ -80,6 +80,19 @@ BookmarkData){
         return 'nav *[title], #readium-page-btns *[title]';
     };
    
+    Helpers.logAppOpenEvent();
+    
+    //print out current database info
+    var app_log_db = new PouchDB('app_log_db');
+    app_log_db.allDocs({
+        include_docs: true
+    }).then(function (result) {
+        console.log(result);
+        app_log_db.info().then(function (info) {
+            console.log('We have a database: ' + JSON.stringify(info));
+        });
+    });
+
     var ensureUrlIsRelativeToApp = function(ebookURL) {
 
         if (!ebookURL) {
@@ -181,6 +194,7 @@ BookmarkData){
                 var metadata = options.metadata;
     
                 setBookTitle(metadata.title);
+                Helpers.logBookOpenEvent(metadata.title);
 
                 $("#left-page-btn").unbind("click");
                 $("#right-page-btn").unbind("click");
@@ -919,6 +933,7 @@ BookmarkData){
 
         $('.icon-library').on('click', function(){
             loadlibrary();
+            Helpers.logBookCloseEvent();
             return false;
         });
 

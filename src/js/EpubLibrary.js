@@ -328,13 +328,12 @@ Helpers){
 
             //On last epub
             if (!epub) { // count >= epubs.length, eg epub[count] = null
+
+                
                 $('.details').on('click', loadDetails);
                 $('.categories').on('click', loadCategoriesDialog );
-                console.log("current css filter string is");
-                console.log(currentCssFilterString);
                 if (!(currentCssFilterString === ""))
                 {
-                    console.log('so we are hiding items');
                     $(".library-item").hide();
                     $(currentCssFilterString).show();
                 }
