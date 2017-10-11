@@ -403,6 +403,8 @@ define(['i18nStrings', 'keymaster', 'Settings'], function(Strings, key, Settings
             FullScreenToggle: Strings.enter_fullscreen + " / " + Strings.exit_fullscreen,
 
             SwitchToLibrary: Strings.view_library,
+            PlayTts: Strings.play_tts,
+            StopTts: Strings.stop_tts,
 
             TocShowHideToggle: Strings.toc,
 
@@ -450,6 +452,8 @@ define(['i18nStrings', 'keymaster', 'Settings'], function(Strings, key, Settings
         FullScreenToggle: 'h', //accesskey'ed
 
         SwitchToLibrary: 'b', //accesskey'ed
+        PlayTts: 'e', //accesskey'ed
+        StopTts: 'shift+e', //accesskey'ed
 
         TocShowHideToggle: 't', //accesskey'ed
 

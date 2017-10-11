@@ -13,6 +13,7 @@
              <li class="active" role="presentation"><button id="tab-butt-style"  title="{{strings.style}}" aria-label="{{strings.style}}" role='tab' aria-controls="tab-style" data-toggle="tab" data-target="#tab-style" tabindex="0">{{strings.style}}</button></li>
              <li role="presentation"><button id="tab-butt-layout"  title="{{strings.layout}}" aria-label="{{strings.layout}}" role='tab' aria-controls="tab-layout" data-toggle="tab" data-target="#tab-layout" tabindex="-1">{{strings.layout}}</button></li>
              <li role="presentation"><button id="tab-butt-keys"  title="{{strings.i18n_keyboard_shortcuts}}" aria-label="{{strings.i18n_keyboard_shortcuts}}" role='tab' aria-controls="tab-keyboard" data-toggle="tab" data-target="#tab-keyboard" tabindex="-1">{{strings.i18n_keyboard_shortcuts}}</button></li>
+             <li role="presentation"><button id="tab-butt-db" title="Database Connection" aria-label="Database Connection" role='tab' aria-controls="tab-db" data-toggle="tab" data-target="#tab-remote-database" tabindex="-1">Remote DB</button></li>
            </ul>
 
 
@@ -197,6 +198,14 @@
                     </div>
 
 
+                    </div>
+                    <div id="tab-remote-database" class="tab-pane" role="tabpanel">
+                        <form>
+                            <input type="text" placeholder="Device ID" id="deviceId" name="deviceId" />
+                            <input type="password" placeholder="Device Password" id="devicePassword" name="devicePassword" />
+                            <BR>
+                        </form>
+                            <button style="margin-top: 30px" class="btn btn-secondary" id="reset-db">Reset Local Logging Database</button>
                     </div>
                     <div id="tab-keyboard" class="tab-pane" role="tabpanel">
 

@@ -21,6 +21,12 @@
   "view_library": {
     "message" : "Library"
   },
+  "play_tts": {
+    "message" : "Play Text-To-Speech"
+  },
+  "stop_tts": {
+    "message" : "Stop Text-To-Speech"
+  },
   "highlight_selection" : {
     "message" : "Highlight Selected Text"
   },

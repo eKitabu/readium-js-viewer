@@ -1,4 +1,4 @@
-define(['./ModuleConfig', 'hgn!readium_js_viewer_html_templates/settings-dialog.html', './ReaderSettingsDialog_Keyboard', 'i18nStrings', './Dialogs', 'Settings', './Keyboard'], function(moduleConfig, SettingsDialog, KeyboardSettings, Strings, Dialogs, Settings, Keyboard){
+define(['./ModuleConfig', 'hgn!readium_js_viewer_html_templates/settings-dialog.html', './ReaderSettingsDialog_Keyboard', 'i18nStrings', './Dialogs', 'Settings', './Keyboard','readium_shared_js/helpers'], function(moduleConfig, SettingsDialog, KeyboardSettings, Strings, Dialogs, Settings, Keyboard,Helpers){
 
     // change these values to affec the default state of the application's preferences at first-run.
     var defaultSettings = {
@@ -114,16 +114,6 @@ define(['./ModuleConfig', 'hgn!readium_js_viewer_html_templates/settings-dialog.
 			}
 		});
     
-
-        $('#tab-butt-main').on('click', function(){
-            $("#tab-keyboard").attr('aria-expanded', "false");
-            $("#tab-main").attr('aria-expanded', "true");
-        });
-        $('#tab-butt-keys').on('click', function(){
-            $("#tab-main").attr('aria-expanded', "false");
-            $("#tab-keyboard").attr('aria-expanded', "true");
-        });
-
         $('#settings-dialog').on('hide.bs.modal', function(){ // IMPORTANT: not "hidden.bs.modal"!! (because .off() in
 
             // Safety: "save" button click
@@ -257,6 +247,39 @@ define(['./ModuleConfig', 'hgn!readium_js_viewer_html_templates/settings-dialog.
                 scroll: "auto"
             };
 
+            //handle app utilization logging remote database information
+            //IF there was a new deviceID entered
+            if ($('#deviceId').val() != "")
+            {
+                
+                //1 rev limit as  we do not want to store revisions of deviceid / password
+                var app_login = new PouchDB('app_login',{revs_limit: 1, auto_compaction: true});
+                if ($('#devicePassword').val() != "")
+                {
+                    //get new device credentials
+                    var credentials = {
+                        _id: "credentials", 
+                        user: $('#deviceId').val(), 
+                        password: $('#devicePassword').val() }
+                    //update new credentials
+                    app_login.get(credentials._id).then(function(originalDoc)
+                    {
+                        credentials._rev = originalDoc._rev;
+                        app_login.put( credentials).then(
+                            function(response) { 
+                            }
+                        );
+                    }).catch(function(err) {
+                        if (err.status === 404) {
+                            return app_login.put(credentials);
+                        } else {
+                            console.log('Error while updating design document:' + err);
+                        }
+                    });
+                    $('#devicePassword').val("");
+                }
+            } // if ($('#deviceId').val() != "")
+
             if($('#scroll-doc-option input').prop('checked')) {
                 readerSettings.scroll = "scroll-doc";
             }
@@ -356,8 +379,12 @@ define(['./ModuleConfig', 'hgn!readium_js_viewer_html_templates/settings-dialog.
             $('#settings-dialog').modal('hide');
         });
 
+        $('button#reset-db').on('click', function(){
+            Helpers.resetLocalDb();
+        });
         $('#settings-dialog .btn-primary').on('click', save);
     }
+
 
     return {
         initDialog : initDialog,

@@ -80,18 +80,53 @@ BookmarkData){
         return 'nav *[title], #readium-page-btns *[title]';
     };
    
+    //eReader Usage tracking database
+    var externalDb = {
+        port: "5984",
+        url: "shop.ekitabu.com"
+    }
     Helpers.logAppOpenEvent();
-    
-    //print out current database info
+
+    //initialize or open the app utilization log pouch DB
     var app_log_db = new PouchDB('app_log_db');
-    app_log_db.allDocs({
-        include_docs: true
-    }).then(function (result) {
-        console.log(result);
-        app_log_db.info().then(function (info) {
-            console.log('We have a database: ' + JSON.stringify(info));
+
+    app_log_db.info().then(function (info) {
+        var app_login = new PouchDB('app_login',{revs_limit: 1, auto_compaction: true});
+
+        //connect to the remote sync version of the database
+        app_login.get("credentials").then(function(credentials)
+        {
+            var loginUrl = 'http://' + 
+                    credentials.user +':' + 
+                    credentials.password + '@' + 
+                    externalDb.url + ':' + 
+                    externalDb.port + '/'+ 
+                    credentials.user;
+            var remote_app_log_db = new PouchDB(loginUrl);
+            //the "then" will fire if we have a remote database connection
+            remote_app_log_db.info()
+            .then(function (details) {
+
+                //push the most recent changes to the remote database
+                app_log_db.replicate.to(remote_app_log_db);
+                remote_app_log_db.allDocs({
+                    include_docs: true
+                }).then(function (result) {
+                    //console.log(result);
+                });
+            })
+        }).catch(function(err) {
+            if (err.status === 404) {
+                return app_login.put(credentials);
+            } else {
+                console.log('Error:' + err);
+            }
         });
     });
+
+
+    
+    
 
     var ensureUrlIsRelativeToApp = function(ebookURL) {
 
@@ -919,6 +954,7 @@ BookmarkData){
 
         var loadlibrary = function()
         {
+            Helpers.logBookCloseEvent();
             $("html").attr("data-theme", "library");
             
             var urlParams = Helpers.getURLQueryParams();
@@ -928,12 +964,34 @@ BookmarkData){
             $(window).triggerHandler('loadlibrary', libraryURL);
             //$(window).trigger('loadlibrary');
         };
-
         Keyboard.on(Keyboard.SwitchToLibrary, 'reader', loadlibrary /* function(){setTimeout(, 30);} */ );
-
         $('.icon-library').on('click', function(){
             loadlibrary();
-            Helpers.logBookCloseEvent();
+            return false;
+        });
+
+
+        var playTts = function() {
+            console.log("and here's where we play TTS");
+            var iFrameBody = $("#epubContentIframe").contents().find("body");
+            var textContent = iFrameBody.text();
+            console.log(textContent);
+            TtsManager.speak(textContent);
+            Helpers.logPlayTtsEvent();
+        }
+        var stopTts = function() {
+            console.log("and here's where we stop TTS");
+            TtsManager.stop();
+            Helpers.logStopTtsEvent();
+        }
+        Keyboard.on(Keyboard.StopTts, 'reader', stopTts /* function(){setTimeout(, 30);} */ );
+        Keyboard.on(Keyboard.PlayTts, 'reader', playTts /* function(){setTimeout(, 30);} */ );
+        $('.icon-tts').on('click', function(){
+            playTts();
+            return false;
+        });
+        $('.icon-stop-tts').on('click', function(){
+            stopTts();
             return false;
         });
 
